@@ -8,6 +8,7 @@
 # Directories #
 ###############
 logs/
+.idea/
 
 # Specific files #
 ##################
