@@ -10,6 +10,9 @@ class PollAdmin(admin.ModelAdmin):
         (None, {'fields':['question']}),
         ('Date published', {'fields':['pub_date']}),
     ]
+    list_display = ['question','pub_date','was_published_recently']
     inlines = [ChoiseInline]
+    list_filter = ['pub_date']
+    search_fields = ['question']
 
 admin.site.register(Poll,PollAdmin)
