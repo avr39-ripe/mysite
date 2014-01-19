@@ -22,7 +22,6 @@ class ResultsView(generic.DetailView):
 
 def index(request):
     latest_poll_list = Poll.objects.order_by('-pub_date')[:5]
-    output = ', '.join([p.question for p in latest_poll_list])
     return render(request, 'polls/index.html', {'latest_poll_list': latest_poll_list})
 
 def detail(request, poll_id):
