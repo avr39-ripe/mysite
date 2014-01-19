@@ -1,9 +1,25 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.views import generic
+
 from polls.models import Poll, Choice
 
 # Create your views here.
+class IndexView(generic.ListView):
+        template_name = 'polls/index.html'
+        context_object_name = 'latest_poll_list'
+        def get_queryset(self):
+            return Poll.objects.order_by('-pub_date')[:5]
+
+class DetailView(generic.DetailView):
+    template_name = 'polls/detail.html'
+    model = Poll
+
+class ResultsView(generic.DetailView):
+    template_name = 'polls/results.html'
+    model = Poll
+
 def index(request):
     latest_poll_list = Poll.objects.order_by('-pub_date')[:5]
     output = ', '.join([p.question for p in latest_poll_list])
