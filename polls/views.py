@@ -16,6 +16,8 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     template_name = 'polls/detail.html'
     model = Poll
+    def get_queryset(self):
+        return Poll.objects.filter(pub_date__lte=timezone.now())
 
 class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
