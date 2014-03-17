@@ -8,6 +8,7 @@ from polls.models import Poll
 
 # Create your tests here.
 
+
 class PollMethodTest(TestCase):
     def test_was_published_recently_with_future_poll(self):
         """
@@ -30,8 +31,10 @@ class PollMethodTest(TestCase):
         recent_poll = Poll(pub_date=timezone.now() - datetime.timedelta(hours=1))
         self.assertEqual(recent_poll.was_published_recently(), True)
 
+
 def create_poll(question, days):
     return Poll.objects.create(question=question, pub_date=timezone.now()+datetime.timedelta(days=days))
+
 
 class PollViewTests(TestCase):
     def test_index_view_with_no_polls(self):
@@ -47,7 +50,7 @@ class PollViewTests(TestCase):
     def test_index_view_with_past_poll(self):
         create_poll(question="Past poll.", days=-30)
         response = self.client.get(reverse('polls:index'))
-        self.assertQuerysetEqual(response.context['latest_poll_list'],['<Poll: Past poll.>'])
+        self.assertQuerysetEqual(response.context['latest_poll_list'], ['<Poll: Past poll.>'])
 
     def test_index_view_with_future_polls(self):
         create_poll(question="Future poll.", days=30)
@@ -62,7 +65,8 @@ class PollViewTests(TestCase):
         create_poll(question="Future poll", days=30)
         response = self.client.get(reverse('polls:index'))
 #        print >> sys.stderr, response
-        self.assertQuerysetEqual(response.context['latest_poll_list'],['<Poll: Past poll.>'])
+        self.assertQuerysetEqual(response.context['latest_poll_list'], ['<Poll: Past poll.>'])
+
 
 class PollIndexDetailTests(TestCase):
     def test_detail_view_with_a_future_poll(self):
